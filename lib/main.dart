@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import './common/ThemeModel.dart';
 import 'package:provider/provider.dart';
 
 import 'common/Global.dart';
+import 'routes/Login.dart';
+import 'routes/Themes.dart';
 
 
 
@@ -23,7 +27,6 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<ThemeModel>(
         builder: (BuildContext context, themeModel, Widget child) {
-          print(themeModel.theme);
           return MaterialApp(
             debugShowCheckedModeBanner: false,  //
             title: 'Flutter Demo',
@@ -31,6 +34,10 @@ class MyApp extends StatelessWidget {
               primarySwatch: themeModel.theme,
             ),
             home: MyHomePage(title: 'Flutter Demo Home Page'),
+            routes: <String, WidgetBuilder>{
+              "login": (context) => Login(),
+              "themes": (context) => Themes()
+            }
           );
         }
       ),
@@ -53,10 +60,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-    Provider.of<ThemeModel>(context, listen: false).theme = Colors.grey;
+    // setState(() {
+    //   _counter++;
+    // });
+    Navigator.pushNamed(context, "themes");
   }
 
   @override
@@ -71,6 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Text(
               'You have pushed the button this many times:',
+            ),
+            Text(
+              jsonEncode(Global.profile.toJson()),
             ),
             Text(
               '$_counter',

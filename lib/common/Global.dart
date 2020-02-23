@@ -24,7 +24,7 @@ class Global {
 
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
-    var _profile = _prefs.getString("profie");
+    var _profile = _prefs.getString("profile");
     if (_profile != null) {
       try {
         profile = Profile.fromJson(jsonDecode(_profile));
@@ -35,5 +35,5 @@ class Global {
   }
   // 持久化Profile信息
   static saveProfile() =>
-      _prefs.setString("profile", jsonEncode(profile.toJson()));
-}
+    _prefs.setString("profile", jsonEncode(profile.toJson()));
+} 
