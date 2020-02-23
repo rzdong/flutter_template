@@ -8,7 +8,9 @@ const _themes = <MaterialColor>[
   Colors.cyan,
   Colors.teal,
   Colors.green,
+  Colors.yellow,
   Colors.red,
+  Colors.grey,
 ];
 class Global {
   // 插件

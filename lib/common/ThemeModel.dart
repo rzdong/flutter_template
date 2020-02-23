@@ -15,6 +15,7 @@ class ThemeModel extends ChangeNotifier {
   // 主题改变后，通知其依赖项，新主题会立即生效
   set theme(ColorSwatch color) {
     if (color != theme) {
+      print(color);
       _profile.theme = color[500].value;
       notifyListeners();
     }
