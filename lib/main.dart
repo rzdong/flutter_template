@@ -1,10 +1,11 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import './common/ThemeModel.dart';
 import 'package:provider/provider.dart';
+import 'package:bot_toast/bot_toast.dart';
 
 import 'common/Global.dart';
+import 'common/ThemeModel.dart';
+import 'routes/Home.dart';
 import 'routes/Login.dart';
 import 'routes/Themes.dart';
 
@@ -27,73 +28,23 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<ThemeModel>(
         builder: (BuildContext context, themeModel, Widget child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,  //
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              primarySwatch: themeModel.theme,
-            ),
-            home: MyHomePage(title: 'Flutter Demo Home Page'),
-            routes: <String, WidgetBuilder>{
-              "login": (context) => Login(),
-              "themes": (context) => Themes()
-            }
-          );
+          return BotToastInit(
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,  //
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                primarySwatch: themeModel.theme,
+              ),
+              home: Home(title: 'Flutter Demo Home Page'),
+              navigatorObservers: [BotToastNavigatorObserver()],
+              routes: <String, WidgetBuilder>{
+                "login": (context) => Login(),
+                "themes": (context) => Themes()
+              }
+            )
+          ); 
         }
       ),
-    );
-    
-    
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    // setState(() {
-    //   _counter++;
-    // });
-    Navigator.pushNamed(context, "themes");
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              jsonEncode(Global.profile.toJson()),
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

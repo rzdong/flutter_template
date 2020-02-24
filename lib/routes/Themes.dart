@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../common/ThemeModel.dart';
@@ -21,6 +22,7 @@ class Themes extends StatelessWidget{
               ),
             ),
             onTap: () {
+              BotToast.showText(text: e.toString());
               //主题更新后，MaterialApp会重新build
               Provider.of<ThemeModel>(context, listen: false).theme = e;
             },
