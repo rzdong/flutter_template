@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_template/routes/WebViews.dart';
 import 'package:provider/provider.dart';
 import 'package:bot_toast/bot_toast.dart';
 
@@ -39,7 +40,8 @@ class MyApp extends StatelessWidget {
               navigatorObservers: [BotToastNavigatorObserver()],
               routes: <String, WidgetBuilder>{
                 "login": (context) => Login(),
-                "themes": (context) => Themes()
+                "themes": (context) => Themes(),
+                "webview": (context) => WebViews()
               }
             )
           ); 
