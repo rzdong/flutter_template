@@ -1,18 +1,39 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class MyDrawer extends StatelessWidget {
-  const MyDrawer({
+class MyDrawer extends StatefulWidget {
+
+  MyDrawer({
     Key key,
-  }) : super(key: key);
+    @required this.scaffoldKey
+  }): super(key: key);
+
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  @override
+  MyDrawerState createState() => MyDrawerState();
+
+}
+
+
+class MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
+
+
+  static const List<String> _drawerContents = <String>[
+    'A', 'B', 'C', 'D', 'E',
+  ];
+
+  void _showNotImplementedMessage() {
+    Navigator.pop(context); // Dismiss the drawer.
+    widget.scaffoldKey.currentState.showSnackBar(const SnackBar(
+      content: Text("The drawer's items don't do anything"),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: MediaQuery.removePadding(
-        context: context,
-        //移除抽屉菜单顶部默认留白
-        removeTop: true,
-        child: Column(
+      child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
@@ -35,23 +56,26 @@ class MyDrawer extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  ListTile(
-                    leading: const Icon(Icons.add),
-                    title: const Text('Add account'),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.settings),
-                    title: const Text('Manage accounts'),
-                  ),
-                ],
+            MediaQuery.removePadding(
+              context: context,
+              // DrawerHeader consumes top MediaQuery padding.
+              removeTop: true,
+              child: Expanded(
+                child: ListView(
+                  dragStartBehavior: DragStartBehavior.down,
+                  padding: const EdgeInsets.only(top: 8.0),
+                  children: _drawerContents.map<Widget>((String id) {
+                    return ListTile(
+                      leading: CircleAvatar(child: Text(id)),
+                      title: Text('Drawer item $id'),
+                      onTap: _showNotImplementedMessage,
+                    );
+                  }).toList(),
+                ),
               ),
-            ),
-          ],
+            )
+          ]
         ),
-      ),
     );
   }
 }

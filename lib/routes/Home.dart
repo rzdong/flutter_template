@@ -18,6 +18,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  
   int _counter = 0;
 
   DateTime _lastPressedAt;
@@ -36,12 +38,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   void initState() {
     super.initState();
     _tabController = TabController(initialIndex: 0, length: tabs.length, vsync: this);
-    _tabController.addListener((){ 
-      BotToast.showText(text: _tabController.index.toString());
-      _tabController.index > 0 ? showFloat = false : showFloat = true;
+    _tabController.addListener((){
+      setState(() {
+        showFloat = _tabController.index < 1;
+      });
     });
   }
 
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -54,6 +62,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      key: _scaffoldKey,
       // extendBody: true,
       appBar: AppBar(
         title: SizedBox(
@@ -93,18 +102,25 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(
+        scaffoldKey: _scaffoldKey
+      ),
       body: WillPopScope(
         onWillPop: () async {
-          if (_lastPressedAt == null ||
-              DateTime.now().difference(_lastPressedAt) >
-                  Duration(seconds: 1)) {
-            //两次点击间隔超过1秒则重新计时
-            _lastPressedAt = DateTime.now();
-            BotToast.showText(text:"再按一次退出");
+          if (_tabController.index > 0) {
+            _tabController.animateTo(0);
             return false;
+          } else {
+            if (_lastPressedAt == null ||
+                DateTime.now().difference(_lastPressedAt) >
+                    Duration(seconds: 1)) {
+              //两次点击间隔超过1秒则重新计时
+              _lastPressedAt = DateTime.now();
+              BotToast.showText(text:"再按一次退出");
+              return false;
+            }
+            return true;
           }
-          return true;
         },
         child: TabBarView(
           controller: _tabController,
@@ -134,7 +150,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                     FlatButton(
                       child: Text("tologin"),
                       onPressed: () => Navigator.pushNamed(context, "login"),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -153,9 +169,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
       
       floatingActionButton: showFloat ? FloatingActionButton(
           onPressed: _incrementCounter,
-          tooltip: 'Increment',
+          tooltip: '发布动态',
           child: Icon(Icons.add),
-        ) :  null// This trailing comma makes auto-formatting nicer for build methods.
+        ) :  null
     );
   }
 }
