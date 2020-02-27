@@ -25,6 +25,18 @@ class DemoLocalizations {
     );
   }
 
+  String get language {
+    return Intl.message(
+      'lnaguage'
+    );
+  }
+
+  String get auto {
+    return Intl.message(
+      'auto'
+    );
+  }
+
   remainingEmailsMessage(int howMany) => Intl.plural(howMany,
     zero: 'There are no emails left',
     one: 'There is $howMany email left',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_template/routes/Language.dart';
 import 'package:flutter_template/routes/WebViews.dart';
 import 'package:provider/provider.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -7,6 +8,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'common/Global.dart';
 import 'common/LocaleModel.dart';
 import 'common/ThemeModel.dart';
+import 'i10n/localization_intl.dart';
 import 'routes/Home.dart';
 import 'routes/Login.dart';
 import 'routes/Themes.dart';
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
                 // 本地化的代理类
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
+                DemoLocalizationsDelegate()
               ],
               supportedLocales: [
                 const Locale('en', 'US'), // 美国英语
@@ -42,6 +45,7 @@ class MyApp extends StatelessWidget {
               ],
               localeResolutionCallback:
                   (Locale _locale, Iterable<Locale> supportedLocales) {
+                    print(_locale);
                 if (localeModel.getLocale() != null) {
                   //如果已经选定语言，则不跟随系统
                   return localeModel.getLocale();
@@ -58,7 +62,11 @@ class MyApp extends StatelessWidget {
                 }
               },
               debugShowCheckedModeBanner: false, //
-              title: 'Flutter Demo',
+              onGenerateTitle: (context){
+                // 此时context在Localizations的子树中
+                return DemoLocalizations.of(context).title;
+              },
+              // title: 'Flutter Demo',
               theme: ThemeData(
                 primarySwatch: themeModel.theme,
               ),
@@ -67,7 +75,8 @@ class MyApp extends StatelessWidget {
               routes: <String, WidgetBuilder>{
                 "login": (context) => Login(),
                 "themes": (context) => Themes(),
-                "webview": (context) => WebViews()
+                "webview": (context) => WebViews(),
+                "language": (context) => Language(),
               }
             )
           );

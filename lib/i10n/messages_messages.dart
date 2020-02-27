@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a zh_CN locale. All the
+// This is a library that provides messages for a messages locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -17,15 +17,15 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'zh_CN';
+  String get localeName => 'messages';
 
-  static m0(howMany) => "${Intl.plural(howMany, zero: '没有未读邮件', one: '有${howMany}封未读邮件', other: '有${howMany}封未读邮件')}";
+  static m0(howMany) => "${Intl.plural(howMany, zero: 'There are no emails left', one: 'There is ${howMany} email left', other: 'There are ${howMany} emails left')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "auto" : MessageLookupByLibrary.simpleMessage("自动"),
-    "lnaguage" : MessageLookupByLibrary.simpleMessage("语言"),
+    "auto" : MessageLookupByLibrary.simpleMessage("auto"),
+    "lnaguage" : MessageLookupByLibrary.simpleMessage("lnaguage"),
     "remainingEmailsMessage" : m0,
-    "title" : MessageLookupByLibrary.simpleMessage("Flutter应用")
+    "title" : MessageLookupByLibrary.simpleMessage("Flutter APP")
   };
 }

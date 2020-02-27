@@ -66,7 +66,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
       // extendBody: true,
       appBar: AppBar(
         title: SizedBox(
-          width: 180.0,
+          width: 190.0,
           child: TabBar(   //生成Tab菜单
             controller: _tabController,
             indicatorSize: TabBarIndicatorSize.label,
@@ -150,6 +150,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                     FlatButton(
                       child: Text("tologin"),
                       onPressed: () => Navigator.pushNamed(context, "login"),
+                    ),
+                    FlatButton(
+                      child: Text("tolanguage"),
+                      onPressed: () => Navigator.pushNamed(context, "language"),
                     ),
                   ],
                 ),
