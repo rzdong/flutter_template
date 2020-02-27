@@ -15,19 +15,36 @@ class MyDrawer extends StatefulWidget {
 
 }
 
+class DrawerItemList {
+  DrawerItemList({
+    @required this.title,
+    @required this.routeName,
+  });
+
+  final String title;
+  final String routeName;
+}
+
 
 class MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
 
-  static const List<String> _drawerContents = <String>[
-    'A', 'B', 'C', 'D', 'E',
+  static List<DrawerItemList> _drawerContents = <DrawerItemList>[
+    new DrawerItemList(title: '浏览webview', routeName: 'webview'),
+    new DrawerItemList(title: '设置主题', routeName: 'themes'),
+    new DrawerItemList(title: '去登陆', routeName: 'login'),
+    new DrawerItemList(title: '设置语言', routeName: 'language'),
   ];
 
-  void _showNotImplementedMessage() {
-    Navigator.pop(context); // Dismiss the drawer.
-    widget.scaffoldKey.currentState.showSnackBar(const SnackBar(
-      content: Text("The drawer's items don't do anything"),
-    ));
+  void _showNotImplementedMessage(String routeName) {
+    // Navigator.pop(context); // Dismiss the drawer.
+      Navigator.pushNamed(context, routeName);
+  //   widget.scaffoldKey.currentState.showSnackBar(const SnackBar(
+  //     content: Text("The drawer's items don't do anything"),
+  //   ));
+    // return void (String routeName) {
+    //   Navigator.pushNamed(context, routeName);
+    // };
   }
 
   @override
@@ -64,11 +81,13 @@ class MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                 child: ListView(
                   dragStartBehavior: DragStartBehavior.down,
                   padding: const EdgeInsets.only(top: 8.0),
-                  children: _drawerContents.map<Widget>((String id) {
+                  children: _drawerContents.map<Widget>((DrawerItemList item) {
                     return ListTile(
-                      leading: CircleAvatar(child: Text(id)),
-                      title: Text('Drawer item $id'),
-                      onTap: _showNotImplementedMessage,
+                      leading: CircleAvatar(child: Text(item.title[0])),
+                      title: Text(item.title),
+                      onTap: () {
+                        _showNotImplementedMessage(item.routeName);
+                      },
                     );
                   }).toList(),
                 ),

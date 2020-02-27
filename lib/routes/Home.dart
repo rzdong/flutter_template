@@ -139,22 +139,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                       '$_counter',
                       style: Theme.of(context).textTheme.display1,
                     ),
-                    FlatButton(
-                      child: Text("toWebView"),
-                      onPressed: () => Navigator.pushNamed(context, "webview"),
-                    ),
-                    FlatButton(
-                      child: Text("tothemes"),
-                      onPressed: () => Navigator.pushNamed(context, "themes"),
-                    ),
-                    FlatButton(
-                      child: Text("tologin"),
-                      onPressed: () => Navigator.pushNamed(context, "login"),
-                    ),
-                    FlatButton(
-                      child: Text("tolanguage"),
-                      onPressed: () => Navigator.pushNamed(context, "language"),
-                    ),
                   ],
                 ),
               ),
