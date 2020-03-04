@@ -30,6 +30,7 @@ dependencies:
   bot_toast: ^2.2.1
   webview_flutter: ^0.3.19+8
   intl: ^0.16.0
+  dio: ^3.0.9
   
 
 

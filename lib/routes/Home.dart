@@ -1,10 +1,10 @@
-import 'dart:convert';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_template/widgets/MyDrawer.dart';
-import '../common/Global.dart';
-
-
+import 'package:flutter_template/widgets/home/Index.dart';
+import 'package:flutter_template/widgets/home/Ranks.dart';
+import 'package:flutter_template/widgets/home/Trends.dart';
 
 
 
@@ -17,19 +17,20 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  
-  int _counter = 0;
+
+  @override
+  bool get wantKeepAlive => true;
 
   DateTime _lastPressedAt;
 
   TabController _tabController;
 
-  List<String> tabs = [
-    '主页',
-    '榜单',
-    '动态'
+  List<MenuItem> tabs = [
+    MenuItem(name: '主页', child: Index()),
+    MenuItem(name: '榜单', child: Ranks()),
+    MenuItem(name: '动态', child: Trends()),
   ];
 
   bool showFloat = true;
@@ -52,19 +53,22 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   }
 
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-    // Navigator.pushNamed(context, "webview");
+    // setState(() {
+    //   _counter++;
+    // });
+    Navigator.pushNamed(context, "webview");
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+    print('build home');
     return Scaffold(
       extendBodyBehindAppBar: true,
       key: _scaffoldKey,
       // extendBody: true,
       appBar: AppBar(
+        elevation: 0.0,
         title: SizedBox(
           width: 190.0,
           child: TabBar(   //生成Tab菜单
@@ -72,8 +76,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
             indicatorSize: TabBarIndicatorSize.label,
             tabs: tabs.map((e){
               return SizedBox(
-                height: kToolbarHeight - 2,
-                child: Tab(text: e),
+                height: kToolbarHeight - 3,
+                child: Tab(text: e.name),
               );
             }).toList()
           ),
@@ -82,6 +86,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
         leading: Builder(
           builder: (context) {
             return InkWell(
+              
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
 
@@ -93,7 +98,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                 )
               ),
               onTap: () {
-                Scaffold.of(context).openDrawer(); 
+                Scaffold.of(context).openDrawer();
+                // Navigator.push(context, MaterialPageRoute(
+                //   builder: (context) { return Login(); }
+                // ));
               },
             );
           },
@@ -124,33 +132,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
         },
         child: TabBarView(
           controller: _tabController,
-          children: <Widget>[
-            Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'You have pushed the button this many times:',
-                    ),
-                    Text(
-                      jsonEncode(Global.profile.toJson()),
-                    ),
-                    Text(
-                      '$_counter',
-                      style: Theme.of(context).textTheme.display1,
-                    ),
-                  ],
-                ),
-              ),
-            Container(
-              alignment: Alignment.center,
-              child: Text('榜单'),
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Text('动态'),
-            )
-          ]
+          children: tabs.asMap().keys.map((index){
+              return tabs[index].child;
+          }).toList(),
         )
         
       ),
@@ -162,4 +146,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
         ) :  null
     );
   }
+}
+
+class MenuItem {
+  MenuItem({
+    @required this.name,
+    @required this.child
+  }): super();
+  final String name;
+  final Widget child;
 }

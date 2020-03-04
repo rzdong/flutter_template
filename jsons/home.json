@@ -1,0 +1,14 @@
+{
+  "news": {
+    "title": "",
+    "list": "$[]homeItem"
+  },
+  "popular": {
+    "title": "",
+    "list": "$[]homeItem"
+  },
+  "other": {
+    "title": "",
+    "list": "$[]homeItem"
+  }
+}

@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
                 "themes": (context) => Themes(),
                 "webview": (context) => WebViews(),
                 "language": (context) => Language(),
-              }
+              },
             )
           );
         }
