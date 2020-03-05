@@ -11,7 +11,7 @@ HomeItem _$HomeItemFromJson(Map<String, dynamic> json) {
     ..title = json['title'] as String
     ..content = json['content'] as String
     ..tag = json['tag'] as String
-    ..created_at = json['created_at'] as num
+    ..createdAt = json['createdAt'] as num
     ..picture = json['picture'] as String;
 }
 
@@ -19,6 +19,6 @@ Map<String, dynamic> _$HomeItemToJson(HomeItem instance) => <String, dynamic>{
       'title': instance.title,
       'content': instance.content,
       'tag': instance.tag,
-      'created_at': instance.created_at,
+      'createdAt': instance.createdAt,
       'picture': instance.picture
     };

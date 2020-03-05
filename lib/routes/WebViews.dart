@@ -28,12 +28,14 @@ class _WebViewsState extends State<WebViews> {
 
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context).settings.arguments;
+    print(args);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter WebView example'),
+        title: const Text('网页浏览器'),
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
         actions: <Widget>[
-          NavigationControls(_controller.future),
+          // NavigationControls(_controller.future),
           SampleMenu(_controller.future),
         ],
       ),
@@ -41,7 +43,7 @@ class _WebViewsState extends State<WebViews> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl: 'https://flutter.dev',
+          initialUrl: args ?? 'https://flutter.dev',
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);

@@ -9,7 +9,7 @@ class HomeItem {
     String title;
     String content;
     String tag;
-    num created_at;
+    num createdAt;
     String picture;
     
     factory HomeItem.fromJson(Map<String,dynamic> json) => _$HomeItemFromJson(json);

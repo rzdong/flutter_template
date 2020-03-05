@@ -8,9 +8,15 @@ part of 'home.dart';
 
 Home _$HomeFromJson(Map<String, dynamic> json) {
   return Home()
-    ..news = json['news'] as Map<String, dynamic>
-    ..popular = json['popular'] as Map<String, dynamic>
-    ..other = json['other'] as Map<String, dynamic>;
+    ..news = json['news'] == null
+        ? null
+        : HomeCard.fromJson(json['news'] as Map<String, dynamic>)
+    ..popular = json['popular'] == null
+        ? null
+        : HomeCard.fromJson(json['popular'] as Map<String, dynamic>)
+    ..other = json['other'] == null
+        ? null
+        : HomeCard.fromJson(json['other'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$HomeToJson(Home instance) => <String, dynamic>{
