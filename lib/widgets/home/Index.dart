@@ -44,7 +44,11 @@ class IndexState extends State<Index> with AutomaticKeepAliveClientMixin{ //Flut
         home = home;
       });
     } catch (error) {
-      BotToast.showText(text:"加载异常，请重试");
+      if (error.toString().contains("TIMEOUT")) {
+        BotToast.showText(text:"超时，请重试");
+      } else {
+        BotToast.showText(text:"加载异常，请重试");
+      }
       print(error);
     } finally {
       BotToast.closeAllLoading();
@@ -68,9 +72,9 @@ class IndexState extends State<Index> with AutomaticKeepAliveClientMixin{ //Flut
               child:  Column( 
                   //动态创建一个List<Widget>  
                   children: [
-                    CardItem(card: home.news),
-                    CardItem(card: home.popular),
-                    CardItem(card: home.other)
+                    CardItem(card: home?.news ?? null),
+                    CardItem(card: home?.popular ?? null),
+                    CardItem(card: home?.other ?? null)
                   ]
                 ),
               ),
@@ -108,6 +112,9 @@ class CardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (card == null) {
+      return Container();
+    }
     dynamic arr = [
       Material(
         child: Ink(

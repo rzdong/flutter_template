@@ -18,7 +18,7 @@ class Git {
   Options _options;
   static Dio dio = new Dio(BaseOptions(
     connectTimeout: 5000,
-    baseUrl: 'http://192.168.0.105:7001/'
+    baseUrl: 'http://192.168.0.105:7001'
   ));
 
   static void init() {

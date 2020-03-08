@@ -86,7 +86,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin, Automa
         leading: Builder(
           builder: (context) {
             return InkWell(
-              
+              enableFeedback: false,
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
 
